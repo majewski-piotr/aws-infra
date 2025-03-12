@@ -55,10 +55,14 @@ Each configuration is designed with clear input and output variables, allowing t
     ├── alb
     ├── apigateway
     └── deployment
-    ```
+```
 
 Each folder contains a complete Terraform configuration that can be applied independently. Start with the **Network Layer** to set up the foundational infrastructure, then move upward through the layers, ensuring that each configuration consumes the outputs of the preceding layer as needed.
 
 ---
 
 This structure helps maintain clear separation of concerns while ensuring the dependencies between infrastructure components are met during deployment.
+
+## Current PoC
+
+Right now I am working on setting up 2 tier web application across 2 vpcs connected via transit gateway. Backend tier should reside inside private vpc. I intend to provide high avaiability, metric monitoring as well as cost monitoring, alerting and reporting
