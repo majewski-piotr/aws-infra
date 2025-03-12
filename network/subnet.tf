@@ -1,5 +1,5 @@
 resource "aws_subnet" "private_a" {
-  vpc_id            = aws_vpc.main.id
+  vpc_id            = aws_vpc.private.id
   cidr_block        = "10.0.0.0/25"
   availability_zone = "${var.region}a"
   map_public_ip_on_launch = false
@@ -10,7 +10,7 @@ resource "aws_subnet" "private_a" {
 }
 
 resource "aws_subnet" "private_b" {
-  vpc_id            = aws_vpc.main.id
+  vpc_id            = aws_vpc.private.id
   cidr_block        = "10.0.0.128/25"
   availability_zone = "${var.region}b"
   map_public_ip_on_launch = false
