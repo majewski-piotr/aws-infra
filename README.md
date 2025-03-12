@@ -29,7 +29,7 @@ Each configuration is designed with clear input and output variables, allowing t
 ---
 
 ## Repository Structure
-
+```
 .
 ├── network
 │   ├── vpc
@@ -55,6 +55,7 @@ Each configuration is designed with clear input and output variables, allowing t
     ├── alb
     ├── apigateway
     └── deployment
+    ```
 
 Each folder contains a complete Terraform configuration that can be applied independently. Start with the **Network Layer** to set up the foundational infrastructure, then move upward through the layers, ensuring that each configuration consumes the outputs of the preceding layer as needed.
 
