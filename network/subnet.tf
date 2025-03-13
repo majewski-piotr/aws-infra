@@ -1,12 +1,24 @@
-resource "aws_subnet" "private" {
+resource "aws_subnet" "compute" {
   for_each = local.availability_zones
   vpc_id                  = aws_vpc.private.id
-  cidr_block              = local.cidr.private.subnet[each.value]
+  cidr_block              = local.cidr.private.subnet.compute[each.value]
   availability_zone       = "${var.region}${each.value}"
   map_public_ip_on_launch = false
 
   tags = {
-    Name = "private-${each.value}"
+    Name = "compute-${each.value}"
+  }
+}
+
+resource "aws_subnet" "edge" {
+  for_each = local.availability_zones
+  vpc_id                  = aws_vpc.private.id
+  cidr_block              = local.cidr.private.subnet.edge[each.value]
+  availability_zone       = "${var.region}${each.value}"
+  map_public_ip_on_launch = false
+
+  tags = {
+    Name = "edge-${each.value}"
   }
 }
 
