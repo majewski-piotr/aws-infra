@@ -48,13 +48,13 @@ resource "aws_route" "edge_to_public" {
 
 resource "aws_route" "public_to_edge" {
   for_each               = local.cidr.private.subnet.edge
-  route_table_id         = aws_route_table.public
+  route_table_id         = aws_route_table.public.id
   destination_cidr_block = each.value
   transit_gateway_id     = aws_ec2_transit_gateway.tgw.id
 }
 
 resource "aws_route" "public_to_igw" {
-  route_table_id         = aws_route_table.public
+  route_table_id         = aws_route_table.public.id
   destination_cidr_block = "0.0.0.0/0"
   gateway_id             = aws_internet_gateway.igw.id
 }

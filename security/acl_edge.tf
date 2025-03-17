@@ -34,7 +34,7 @@ resource "aws_network_acl_rule" "edge_outbound_allow_http_to_compute" {
 
 #  Deny all other outbound traffic
 resource "aws_network_acl_rule" "edge_outbound_deny_all" {
-  network_acl_id = aws_network_acl.compute.id
+  network_acl_id = aws_network_acl.edge.id
   rule_number    = 300
   egress         = true
   protocol       = "-1"
@@ -49,8 +49,8 @@ resource "aws_network_acl_rule" "edge_outbound_deny_all" {
 # Allow HTTP (port 80) from public
 resource "aws_network_acl_rule" "edge_inbound_allow_http_from_public" {
   count          = length(local.subnet_cidrs_public)
-  network_acl_id = aws_network_acl.compute.id
-  rule_number    = 100
+  network_acl_id = aws_network_acl.edge.id
+  rule_number    = 100 + count.index
   egress         = false
   protocol       = "tcp"
   rule_action    = "allow"
@@ -62,8 +62,8 @@ resource "aws_network_acl_rule" "edge_inbound_allow_http_from_public" {
 # Allow HTTP (ephemeral) from compute
 resource "aws_network_acl_rule" "edge_inbound_allow_http_from_compute" {
   count          = length(local.subnet_cidrs_compute)
-  network_acl_id = aws_network_acl.compute.id
-  rule_number    = 100 + count.index
+  network_acl_id = aws_network_acl.edge.id
+  rule_number    = 200 + count.index
   egress         = false
   protocol       = "tcp"
   rule_action    = "allow"
@@ -74,8 +74,8 @@ resource "aws_network_acl_rule" "edge_inbound_allow_http_from_compute" {
 
 # Deny all other inbound traffic
 resource "aws_network_acl_rule" "edge_inbound_deny_all" {
-  network_acl_id = aws_network_acl.compute.id
-  rule_number    = 200
+  network_acl_id = aws_network_acl.edge.id
+  rule_number    = 300
   egress         = false
   protocol       = "-1"
   rule_action    = "deny"

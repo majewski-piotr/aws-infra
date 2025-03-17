@@ -36,7 +36,7 @@ resource "aws_network_acl_rule" "outbound_deny_all" {
 resource "aws_network_acl_rule" "inbound_allow_http" {
   count          = length(local.subnet_cidrs_edge)
   network_acl_id = aws_network_acl.compute.id
-  rule_number    = 100
+  rule_number    = 100 + count.index
   egress         = false
   protocol       = "tcp"
   rule_action    = "allow"
